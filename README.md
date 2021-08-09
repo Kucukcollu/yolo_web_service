@@ -1,5 +1,5 @@
 # yolo_web_service
-###### A web based object detection project with using YOLO.<br></br>
+######A web based object detection project with using YOLO.<br></br>
 
 #### Requirements
 ###### Python => 3.6.9
