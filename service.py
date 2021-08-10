@@ -12,7 +12,9 @@ camera = cv2.VideoCapture(0)
 
 def detection():
     # Load Yolo
+    # tiny model: more faster lower accurate
     net = cv2.dnn.readNet("cfg/yolov3-tiny.weights", "cfg/yolov3-tiny.cfg")
+    # net = cv2.dnn.readNet("cfg/yolov3.weights", "cfg/yolov3.cfg") # main model: less slower more accurate
     classes = []
     with open("cfg/coco.names", "r") as f:
         classes = [line.strip() for line in f.readlines()]
@@ -95,6 +97,25 @@ def detection():
             pass
 
 
+def gen_frames():  # generate frame by frame from camera
+    global out, capture, rec_frame
+    while True:
+        success, frame = camera.read()
+        if success:
+
+            try:
+                frame = cv2.rotate(frame, cv2.ROTATE_180)
+                ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, -1))
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+            except Exception as e:
+                pass
+
+        else:
+            pass
+
+
 @app.route("/")
 def index():
     return render_template('source.html')
@@ -103,6 +124,12 @@ def index():
 @app.route("/video_feed")
 def video_feed():
     return Response(detection(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route("/video_feed_original")
+def video_feed_original():
+    return Response(gen_frames(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
