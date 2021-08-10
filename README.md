@@ -24,4 +24,4 @@
 #### `$ python3 service.py`<br></br>
 
 ## Output
-![](https://github.com/Kucukcollu/yolo_web_service/blob/master/images/screenshot.png)<br></br>
+![](https://github.com/Kucukcollu/yolo_web_service/blob/master/images/yolo_web.gif)<br></br>
