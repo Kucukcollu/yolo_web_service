@@ -1,4 +1,3 @@
 flask
-opencv
+opencv-python
 numpy
-time
