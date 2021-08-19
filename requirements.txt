@@ -1,3 +1,4 @@
 flask
-opencv-python-contrib-headless
+gunicorn
+opencv-contrib-python-headless
 numpy
